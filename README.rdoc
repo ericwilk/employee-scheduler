@@ -1,0 +1,6 @@
+== Employee Schedule Manager
+
+All documentation is in the Github Markdown file README.md.
+
+This is in case we want to use:
+<tt>rake doc:app</tt>.
