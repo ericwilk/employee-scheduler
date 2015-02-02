@@ -27,19 +27,20 @@ If you are using rbenv, it should change the version by default by looking at th
 ### Deployment:
 
 #### Dev:
-in a terminal or shell (cmd on Windows):
-Go to the directory where you would like this to be installed and type:
+##### In a terminal or shell (cmd on Windows):
+- Go to the directory where you would like this to be installed and type:
 $> git clone https://github.com/ericwilk/employee-scheduler.git
-Go to the root application directory (it will be called employee-scheduler unless you changed the defaults). Run:
+- Go to the root application directory (it will be called employee-scheduler unless you changed the defaults). Run:
 $> bundle install
-the first time you use the application, or any time you add or remove dependancies from the Gemfile. If it IS the first time running this, make sure to run:
+- The first time you use the application, or any time you add or remove dependancies from the Gemfile. If it IS the first time running this, make sure to run:
 $> rake db:generate then run:
 $> rake db:migrate
-You will want to run the db:migrate rake task when there are schema changes (i.e. something gets added to db/migrate)
-To start the server
+- You will want to run the db:migrate rake task when there are schema changes (i.e. something gets added to db/migrate)
+- To start the server:
 $> rails s
-To start the server in console mode (good for debugging), type:
+- To start the server in console mode (good for debugging):
 $> rails console
+- It is a good idea to run bundle install, rake db:migrate and git pull frequently to keep in sync with other people's changes.
 
 #### Prod:
 - This will be deployed to AWS via Elastic Beanstalk, since minimal configuration is required. Amazon RDS will be used as a "Multi-AZ Deployment" which will esentially create another DB instance in another region for failover and make sure the data is current. RDS can also take care of backups; we can decide if another in-house solution for this is necessary (so that we have the data and are not relying 100% on AWS).
