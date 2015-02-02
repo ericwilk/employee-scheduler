@@ -6,7 +6,7 @@ Employee Schedule Manager
 ### Install the following with your OS's package manager:
 
 - Git (either the cli version or a GUI. If this is your first time using git, I higly recommend trying the CLI version for a bit; it will help you learn it faster).
-- Ruby-1.9.1, or use rbenv or rvm to manage multiple versions of Ruby. For example, if your system's Ruby version is different you can type:
+- Ruby-1.9.1, or use rbenv or rvm to manage multiple versions of Ruby. For example, if your system's Ruby version is different you can type:  
 $> `rvm use 1.9.1`
 If you are using rbenv, it should change the version by default by looking at the .ruby-version file in the application.
 - You should probably install the dev libraries as well, i.e. ruby-1.9.1-dev
@@ -28,17 +28,17 @@ If you are using rbenv, it should change the version by default by looking at th
 
 #### Dev:
 ##### In a terminal or shell (cmd on Windows):
-- Go to the directory where you would like this to be installed and type:
+- Go to the directory where you would like this to be installed and type:  
 $> git clone https://github.com/ericwilk/employee-scheduler.git
-- Go to the root application directory (it will be called employee-scheduler unless you changed the defaults). Run:
+- Go to the root application directory (it will be called employee-scheduler unless you changed the defaults). Run:  
 $> bundle install
-- The first time you use the application, or any time you add or remove dependancies from the Gemfile. If it IS the first time running this, make sure to run:
-$> rake db:generate then run:
+- The first time you use the application, or any time you add or remove dependancies from the Gemfile. If it IS the first time running this, make sure to run:  
+$> rake db:generate then run:  
 $> rake db:migrate
 - You will want to run the db:migrate rake task when there are schema changes (i.e. something gets added to db/migrate)
-- To start the server:
+- To start the server:  
 $> rails s
-- To start the server in console mode (good for debugging):
+- To start the server in console mode (good for debugging):  
 $> rails console
 - It is a good idea to run bundle install, rake db:migrate and git pull frequently to keep in sync with other people's changes.
 
@@ -46,15 +46,15 @@ $> rails console
 - This will be deployed to AWS via Elastic Beanstalk, since minimal configuration is required. Amazon RDS will be used as a "Multi-AZ Deployment" which will esentially create another DB instance in another region for failover and make sure the data is current. RDS can also take care of backups; we can decide if another in-house solution for this is necessary (so that we have the data and are not relying 100% on AWS).
 ##### Jenkins (we could also easily just use bash for this; it may be easier)
 - Setup a Jenkins job to deploy the app.
-- Make sure on that box (the one Jenkins is deployed to) the AWS EB CLI, which require Git an Pip (well, they are recommended, anyway):
-$> sudo apt-get install git 
-$> sudo apt-get install python-dev
-$> curl "https://bootstrap.pypa.io/get-pip.py" -o "get-pip.py"
-$> sudo python get-pip.py
+- Make sure on that box (the one Jenkins is deployed to) the AWS EB CLI, which require Git an Pip (well, they are recommended, anyway):  
+$> sudo apt-get install git  
+$> sudo apt-get install python-dev  
+$> curl "https://bootstrap.pypa.io/get-pip.py" -o "get-pip.py"  
+$> sudo python get-pip.py  
 $> sudo pip install awsebcli
 - Make sure this is added to Puppet or any similar scripts Jenkins uses for deployment.
-- go to the project directory and run:
-$>eb init
+- go to the project directory and run:  
+$> eb init
 This will go through these various options and save the metadata within the repository:
 
 | Param                 | Default         |
@@ -68,10 +68,9 @@ This will go through these various options and save the metadata within the repo
 | Set up SSH?           | n (no)          |
 
 - It will change .gitignore; it is probably a good idea to check this in (I assume this is the config, above).
-- To deploy the app, simply run:
-$> rails-beanstalk $ eb create rails-beanstalk-env
+- To deploy the app, simply run:  
+$> eb create rails-beanstalk-env
 - This last line can be added to the post-build action in Jenkins. If not all the config is saved it could easily be added here, as well.
-
 
 ### Other:
 
