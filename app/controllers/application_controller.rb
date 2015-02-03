@@ -21,4 +21,8 @@ class ApplicationController < ActionController::Base
       return false
     end
   end
+
+  def admin?
+    current_user && current_user.type.downcase == "administrator"
+  end
 end

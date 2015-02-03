@@ -1,2 +1,5 @@
-<h1>Your Schedule</h1>
-<p>Here is the list of your current schedule.</p>
+<input type="text" required="true" name="bday" id="bday" data-dojo-type="dijit/form/DateTextBox" value=<%= localize(Date.today - 21.days) %> />
+<button id="button1" type="button" data-dojo-type="dijit/form/Button">Button 1</button>
+
+<div data-dojo-type="dijit.Calendar" data-dojo-props="onChange:function(){dojo.byId('formatted').innerHTML=dojo.date.locale.format(arguments[0], {formatLength: 'full', selector:'date'})}"></div>
+<p id="formatted"></p>

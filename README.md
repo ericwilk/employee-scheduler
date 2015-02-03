@@ -12,7 +12,57 @@ If you are using rbenv, it should change the version by default by looking at th
 - You should probably install the dev libraries as well, i.e. ruby-1.9.1-dev
 - Rbenv or RVM, if either a.) The Ruby version installed by the package manager is not 1.9.1, or b.) You plan on using multiple versions of Ruby on the same machine.
 - Install ruby-build as well, if you are using rbenv. It will give you instructions when you try to use a new version from rbenv.
-- Libsqlite3 and libsqlite3-dev
+- MySQL (I am running Ver 5.6.19-0ubuntu0.14.04.1). Keep note of the root password you create.
+- libmysqlclient-dev
+- I would highly recommend keeping the root password protected. You can create a new user by:  
+$> mysql -u root -p
+... and type the root password you remembered. If you want to stay consistent with the way I set this up on my machine, I gave the query:
+```
+mysql> CREATE USER 'newrelic'@'localhost' IDENTIFIED BY 'nremployeetest';
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> quit
+Bye
+```
+- Create a new DB with this user as the owner:
+```
+$> mysql -u root -p
+mysql> CREATE DATABASE employee_scheduler;
+Query OK, 1 row affected (0.01 sec)
+
+mysql> GRANT ALL PRIVILEGES ON employee_scheduler.* TO 'newrelic'@'localhost';
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> exit
+Bye
+```
+- Test this out really quickly:
+```
+$> mysql -u newrelic --password=nremployeetest
+Warning: Using a password on the command line interface can be insecure.
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 43
+Server version: 5.6.19-0ubuntu0.14.04.1 (Ubuntu)
+
+Copyright (c) 2000, 2014, Oracle and/or its affiliates. All rights reserved.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> SHOW DATABASES;
++--------------------+
+| Database           |
++--------------------+
+| information_schema |
+| employee_scheduler |
++--------------------+
+```
+
+Rails should do the rest.
+
 - Nodejs (https://github.com/jekyll/jekyll/issues/2327 - this might be fixed if I upgrade ruby)
 
 ## Configuration:
@@ -33,7 +83,7 @@ $> git clone https://github.com/ericwilk/employee-scheduler.git
 Go to the root application directory (it will be called employee-scheduler unless you changed the defaults). Run:
 $> bundle install
 the first time you use the application, or any time you add or remove dependancies from the Gemfile. If it IS the first time running this, make sure to run:
-$> rake db:generate then run:
+$> rake db:create then run:
 $> rake db:migrate
 You will want to run the db:migrate rake task when there are schema changes (i.e. something gets added to db/migrate)
 To start the server

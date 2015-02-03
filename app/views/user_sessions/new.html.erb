@@ -1,0 +1,22 @@
+<form data-dojo-type="dijit/form/Form" data-dojo-id="myForm">
+    <div class="dijitDialogPaneContentArea">
+      <h1>Please login:</h1>
+    </div>
+    <div class="dijitDialogPaneActionBar" id="loginDialogPaneActionBar">
+      <ol>
+        <ul>
+          <input data-dojo-type="dijit/form/TextBox" type="text" name="name" id="name">
+        </ul>
+        <ul>
+          <input data-dojo-type="dijit/form/password" type="password" name="password" id="password">
+        </ul>
+        <ul>
+          <input data-dojo-type="dijit/form/CheckBox" type="checkbox" name="session_remember" value="true">Remember me at this location.</button>
+        </ul>
+        <ul>
+          <input data-dojo-type="dijit/form/Button" type="submit" value="Login" />
+          <button data-dojo-type="dijit/form/Button" type="button" data-dojo-props="onClick:function(){location.href="http://www.google.com";}">Cancel</button>
+        </ul>
+      </ol>
+    </div>
+</form>
