@@ -2,6 +2,7 @@ EmployeeScheduler::Application.routes.draw do
   get "users/new"
   get "home/index"
   get "schedule/index"
+  get "schedule/modify"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 

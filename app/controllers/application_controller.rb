@@ -16,13 +16,7 @@ class ApplicationController < ActionController::Base
   
   def authenticate
     unless current_user
-      flash[:notice] = "You must login prior to accessing this page."
-      redirect_to new_user_session_path
-      return false
+      @needs_login ||= true
     end
-  end
-
-  def admin?
-    current_user && current_user.type.downcase == "administrator"
   end
 end

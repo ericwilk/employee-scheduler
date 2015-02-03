@@ -15,3 +15,12 @@
 div#loginDialogPaneActionBar {
   text-align : left !important;
 }
+
+div#loginModalDialog{
+  width : 50%;
+}
+
+div#displayCalendar{
+  height : 75%;
+  width : 75%;
+}

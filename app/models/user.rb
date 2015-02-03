@@ -10,10 +10,14 @@ class User < ActiveRecord::Base
 	# a check could be added to require them to change their password,
 	# or to email them a new temp on and then change it (preferable)
 	config.ignore_blank_passwords = false
+  config.check_passwords_against_database = false
+  config.validate_email_field = false
+  config.validate_login_field = false
+  
   end
-  belongs_to :blackout_date
+  has_many :scheduled_date
 
   def support_hero?
-    SupportHeroDate.find(:user => this, :day => Date.today)
+    ScheduledDate.find(:user => this, :event_type_name => "SUPPORT_HERO", :day => Date.today)
   end
 end

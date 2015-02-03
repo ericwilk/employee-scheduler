@@ -1,22 +1,23 @@
-<form data-dojo-type="dijit/form/Form" data-dojo-id="myForm">
+<form data-dojo-type="dijit/form/Form" data-dojo-id="myForm" action="/user_session.html" method="POST">
     <div class="dijitDialogPaneContentArea">
       <h1>Please login:</h1>
     </div>
     <div class="dijitDialogPaneActionBar" id="loginDialogPaneActionBar">
       <ol>
         <ul>
-          <input data-dojo-type="dijit/form/TextBox" type="text" name="name" id="name">
+          <input data-dojo-type="dijit/form/TextBox" type="text" name="email" id="name">
         </ul>
         <ul>
-          <input data-dojo-type="dijit/form/password" type="password" name="password" id="password">
+          <input data-dojo-type="dijit/form/TextBox" type="text" name="password" id="password">
         </ul>
         <ul>
           <input data-dojo-type="dijit/form/CheckBox" type="checkbox" name="session_remember" value="true">Remember me at this location.</button>
         </ul>
         <ul>
-          <input data-dojo-type="dijit/form/Button" type="submit" value="Login" />
+          <input data-dojo-type="dijit/form/Button" type="submit" name="submitLogin" value="Login">
           <button data-dojo-type="dijit/form/Button" type="button" data-dojo-props="onClick:function(){location.href="http://www.google.com";}">Cancel</button>
         </ul>
       </ol>
     </div>
+  <input name="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
 </form>

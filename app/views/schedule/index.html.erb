@@ -1,5 +1,8 @@
-<input type="text" required="true" name="bday" id="bday" data-dojo-type="dijit/form/DateTextBox" value=<%= localize(Date.today - 21.days) %> />
-<button id="button1" type="button" data-dojo-type="dijit/form/Button">Button 1</button>
+<div>
+Suppport Hero For Today: <%= @support_hero_today.email %>
 
-<div data-dojo-type="dijit.Calendar" data-dojo-props="onChange:function(){dojo.byId('formatted').innerHTML=dojo.date.locale.format(arguments[0], {formatLength: 'full', selector:'date'})}"></div>
-<p id="formatted"></p>
+<% if @needs_login %>
+  <select name="user" id="user_cal_select">
+    <% @all_users.each do |usr| %><option name="<%= usr %>">><%= usr %></option><% end %>
+  </select>
+<% end %>

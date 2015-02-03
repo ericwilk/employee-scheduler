@@ -11,25 +11,17 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150202165144) do
+ActiveRecord::Schema.define(version: 20150202177777) do
 
-  create_table "blackout_dates", force: true do |t|
-    t.integer "resource_id"
-    t.string  "resource_type"
-    t.integer "user_id"
-  end
-
-  create_table "holidays", force: true do |t|
-    t.integer "resource_id"
-    t.string  "resource_type"
-    t.string  "scope"
-    t.string  "name"
+  create_table "event_types", force: true do |t|
+    t.string "name"
   end
 
   create_table "scheduled_dates", force: true do |t|
-    t.datetime "created_at"
-    t.datetime "updated_at"
-    t.string   "day"
+    t.string  "day"
+    t.string  "event_type_name"
+    t.string  "holiday_name"
+    t.integer "user_id"
   end
 
   create_table "user_sessions", force: true do |t|
@@ -41,12 +33,13 @@ ActiveRecord::Schema.define(version: 20150202165144) do
     t.datetime "created_at"
     t.datetime "updated_at"
     t.string   "type"
-    t.string   "email",                          null: false
-    t.string   "persistence_token",              null: false
-    t.integer  "login_count",        default: 0, null: false
-    t.integer  "failed_login_count", default: 0, null: false
-    t.string   "crypted_password",               null: false
-    t.string   "password_salt",                  null: false
+    t.string   "email",                            null: false
+    t.string   "persistence_token",                null: false
+    t.integer  "login_count",          default: 0, null: false
+    t.integer  "failed_login_count",   default: 0, null: false
+    t.string   "crypted_password",                 null: false
+    t.string   "password_salt"
+    t.integer  "number_days_assigned"
   end
 
 end

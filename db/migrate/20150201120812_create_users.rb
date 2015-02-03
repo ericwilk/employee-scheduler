@@ -8,7 +8,8 @@ class CreateUsers < ActiveRecord::Migration
       t.integer :login_count,         :null => false,	:default => 0
       t.integer :failed_login_count,  :null => false, :default => 0
       t.string  :crypted_password,	  :null => false
-      t.string  :password_salt,		    :null => false
+      t.string  :password_salt
+      t.integer :number_days_assigned
     end
   end
 end

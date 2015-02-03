@@ -1,0 +1,28 @@
+<form id="ajaxLoginForm">
+  <div data-dojo-type="dijit/Dialog" data-dojo-id="loginDialog" title="Name and Address" id="loginModalDialog">
+    <table class="dijitDialogPaneContentArea">
+        <tr>
+            <td><label for="email">Login or Email:</label></td>
+            <td><input data-dojo-type="dijit/form/TextBox" name="email" id="login_email"></td>
+        </tr>
+        <tr>
+            <td><label for="password">Password:</label></td>
+            <td><input type="password" data-dojo-type="dijit/form/TextBox" name="password" id="password"></td>
+        </tr>
+    </table>
+
+    <div class="dijitDialogPaneActionBar">
+        <button data-dojo-type="dijit/form/Button" type="submit" id="ok" onClick:function(){location.href='https://www.google.com';}>OK</button>
+        <button data-dojo-type="dijit/form/Button" type="button" data-dojo-props="onClick:function(){location.href='https://www.google.com';}"
+                id="cancel">Cancel</button>
+    </div>
+    <input name="authenticity_token" id="authenticity_token" value="<%= form_authenticity_token %>" type="hidden">
+  <script type="text/javascript">
+    require(["dojo/ready"], function(ready) {
+      ready(function() {
+        loginDialog.show();
+      });
+    });
+ </script>
+  </div>
+</form>

@@ -1,0 +1,5 @@
+Suppport Hero For Today: <%= @support_hero_today %>
+
+<% if @needs_login %>
+  <input type="text" required="true" name="bday" id="bday" data-dojo-type="dijit/form/DateTextBox" value=<%= localize(Date.today - 21.days) %> />
+<% end %>

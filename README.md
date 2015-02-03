@@ -85,8 +85,10 @@ $> bundle install
 the first time you use the application, or any time you add or remove dependancies from the Gemfile. If it IS the first time running this, make sure to run:
 $> rake db:create then run:
 $> rake db:migrate
+- Again, for the first time only:  
+$> rake db:seed  
 You will want to run the db:migrate rake task when there are schema changes (i.e. something gets added to db/migrate)
-To start the server
+To start the server:
 $> rails s
 To start the server in console mode (good for debugging), type:
 $> rails console
