@@ -1,35 +1,69 @@
 require 'thread'
 
+# This class keeps track of support days worked by a priority queue
+# I did not think it would be a good idea to change <=>
+
 class FifoSupportAssignmentStrategy
   @semaphore = Mutex.new
   @current_day = Date.today
-  @support_array = [];
+  @support_heap = [];
 
-  def self.add_support_hero_day(user)
+  def self.add_support_hero_day(user, date=nil)
+    hu = HeapedUser.new(user)
+    date = @current_day if date.nil?
     @semaphore.synchronize do
-      sd = ScheduledDate.new(:user => user, :day => @current_day, :event_type_name => "SUPPORT_HERO")
-      sd.save!
-      user.update_attribute(:number_days_assigned, user.number_days_assigned ? user.number_days_assigned + 1 : 0)
-      @current_day += 1
-      @support_array << user unless @support_array.include?(user)
+      if @support_heap.include?(hu)
+        hu.number_days_assigned += 1
+        @current_day += 1
+        hu.usr.save!
+      else
+        sd = ScheduledDate.new(:user => user, :day => @current_day, :event_type_name => "SUPPORT_HERO")
+        sd.save!
+        hu.usr.update_attribute(:number_days_assigned, hu.number_days_assigned ? hu.number_days_assigned + 1 : 0)
+        @current_day += 1
+        @support_heap << hu
+      end
     end
   end
   
-  all_users = User.find(:all)
-  all_users.each{|usr| add_support_hero_day(usr)}
+  if !User.find(:first, :conditions => "email = 'Jay'" )
+    all_users = User.find(:all)
+    all_users.each{|usr| add_support_hero_day(HeapedUser.new(usr))}
+  end
     
-  @support_array.sort_by!{|usr| usr.number_days_assigned}
+  ApplicationHelper.sort_for_heap @support_heap
   
-  def generate_support_days_until(end_date)
+  def self.generate_support_days_until(end_date)
+    return if end_date < @current_day # before the dawn of time, all was nil
     start = @current_day
-    start..end_date do
-      add_support_hero_day(@support_array[0])
-      # This could probably be improved time-wise, using a BST
-      @support_array.sort_by!{|usr| usr.number_days_assigned}
+    start.step(end_date,1) do
+      add_support_hero_day(@support_heap[0])
     end
+    ApplicationHelper.sort_for_heap @support_heap
   end
 
 end
 
+class HeapedUser < User
+  include Comparable
+  @usr = nil
+  def initialize usr
+    @usr = usr
+  end
 
-  
+  def <
+    c.number_days_assigned < other.number_days_assigned
+  end
+
+  def >
+    c.number_days_assigned < other.number_days_assigned
+  end
+
+  def ==
+    c.number_days_assigned == other.number_days_assigned
+  end
+
+  def usr
+    @usr
+  end
+end

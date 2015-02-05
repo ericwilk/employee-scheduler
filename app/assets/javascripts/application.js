@@ -12,3 +12,5 @@
 //
 //= require turbolinks
 //= require_directory .
+//= require jquery
+//= require jquery_ujs

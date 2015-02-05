@@ -5,12 +5,22 @@
   require(["dojo/parser", "dojo/ready", "dijit/Calendar"], function(parser, ready) {
     ready(function() {
       parser.parse();
+      dojo.addOnLoad( function() {
+        var year = parseInt($('span#mainCal_year').innerHTML);
+        var monthText = $('div.dijitCalendarCurrentMonthLabel').innerHTML;
+        var monthDayInYear = 0;
+        $('div.dijitSpacer div.dijitCalendarMonthLabel').each( function() {
+          if(this.innerHTML.indexOf(monthText != -1)){ monthDayInYear = parseInt(this.getAttribute("month")) };
+        });
+        var allDaysAndReps = dojo.xhrGet({url : "/schedule/get_support_days_in_month?date="+2015+"-"+monthDayInYear+"-01"}).results;
+      });
     });
   });
 </script>
 
 <% if ! @current_user %>
   <select name="user" id="user_cal_select" style="float : right;">
+    <option name="default-none">&nbsp;</option>
     <% @all_users.each do |usr| %><option name="<%= usr.email %>"><%= usr.email %></option><% end %>
   </select>
 <% end %>

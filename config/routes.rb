@@ -3,6 +3,7 @@ EmployeeScheduler::Application.routes.draw do
   get "home/index"
   get "schedule/index"
   get "schedule/modify"
+  get "schedule/get_support_days_in_month"
   # The priority is based upon order of creation: first created -> highest priority.
   # See how all your routes lay out with "rake routes".
 
