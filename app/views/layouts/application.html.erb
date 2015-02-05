@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Employee Sceduler</title>
+  <title>Employee Scheduler</title>
   <%= stylesheet_link_tag 'application' %>
   <%= javascript_include_tag 'application' %>
   <%= stylesheet_link_tag '/assets/dijit/themes/claro/claro.css' %>
@@ -11,16 +11,8 @@
 <body class='claro'>
   <% if !@needs_login %>
     <%= yield %>
-    <script>
-      require(["dojo/parser", "dojo/ready", "dijit/Calendar"], function(parser, ready) {
-        ready(function() {
-          parser.parse();
-        });
-      });
-    </script>
   <% else %>
     <%= render "login/login_partial" %>
   <% end %>
-  <div data-dojo-type="dijit.Calendar" data-dojo-props="isDisabledDate:dojo.date.locale.isWeekend" style="width:75%; height:75%;" ></div>
 </body>
 </html>

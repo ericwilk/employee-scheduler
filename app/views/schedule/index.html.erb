@@ -1,8 +1,19 @@
 <div>
-Suppport Hero For Today: <%= @support_hero_today.email %>
+<h1>Suppport Hero For Today: <%= @support_hero_today.email %></h1>
 
-<% if @needs_login %>
-  <select name="user" id="user_cal_select">
-    <% @all_users.each do |usr| %><option name="<%= usr %>">><%= usr %></option><% end %>
+<script>
+  require(["dojo/parser", "dojo/ready", "dijit/Calendar"], function(parser, ready) {
+    ready(function() {
+      parser.parse();
+    });
+  });
+</script>
+
+<% if ! @current_user %>
+  <select name="user" id="user_cal_select" style="float : right;">
+    <% @all_users.each do |usr| %><option name="<%= usr.email %>"><%= usr.email %></option><% end %>
   </select>
 <% end %>
+
+<div data-dojo-type="dijit.Calendar" data-dojo-props="isDisabledDate:dojo.date.locale.isWeekend" style="width:75%; height:75%;" id="mainCal" ></div>
+

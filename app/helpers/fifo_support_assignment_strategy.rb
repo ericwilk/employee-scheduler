@@ -6,13 +6,13 @@ class FifoSupportAssignmentStrategy
   @support_array = [];
 
   def self.add_support_hero_day(user)
-    #@semaphore.synchronize do
+    @semaphore.synchronize do
       sd = ScheduledDate.new(:user => user, :day => @current_day, :event_type_name => "SUPPORT_HERO")
       sd.save!
       user.update_attribute(:number_days_assigned, user.number_days_assigned ? user.number_days_assigned + 1 : 0)
       @current_day += 1
       @support_array << user unless @support_array.include?(user)
-    #end
+    end
   end
   
   all_users = User.find(:all)
@@ -24,7 +24,7 @@ class FifoSupportAssignmentStrategy
     start = @current_day
     start..end_date do
       add_support_hero_day(@support_array[0])
-      # This could probably be improved time-wise
+      # This could probably be improved time-wise, using a BST
       @support_array.sort_by!{|usr| usr.number_days_assigned}
     end
   end
