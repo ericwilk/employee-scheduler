@@ -13,6 +13,8 @@ module ScheduledDateHelper
   end
   
   def self.get_support_hero_today
+    # Set another month just in case
+    set_support_hero_days(Date.today << 1)
     sd = ScheduledDate.find(:first, :conditions => "event_type_name = 'SUPPORT_HERO' and day = '#{Date.today.strftime('%Y-%m-%d')}'")
     sd.user
   end

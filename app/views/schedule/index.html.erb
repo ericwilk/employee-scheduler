@@ -6,13 +6,32 @@
     ready(function() {
       parser.parse();
       dojo.addOnLoad( function() {
-        var year = parseInt($('span#mainCal_year').innerHTML);
-        var monthText = $('div.dijitCalendarCurrentMonthLabel').innerHTML;
+        var year = parseInt($('span#mainCal_year').html());
+        var monthText = $('div.dijitCalendarCurrentMonthLabel').html();
         var monthDayInYear = 0;
         $('div.dijitSpacer div.dijitCalendarMonthLabel').each( function() {
-          if(this.innerHTML.indexOf(monthText != -1)){ monthDayInYear = parseInt(this.getAttribute("month")) };
+          if(this.innerHTML == monthText){ monthDayInYear = parseInt(this.getAttribute("month"))+1 };
         });
-        var allDaysAndReps = dojo.xhrGet({url : "/schedule/get_support_days_in_month?date="+2015+"-"+monthDayInYear+"-01"}).results;
+        var allDaysAndReps = dojo.xhrGet({url : "/schedule/get_support_days_in_month.json?date="+year+"-"+(monthDayInYear < 10 ? "0" + monthDayInYear : monthDayInYear)+"-01", handleAs : "json", sync : true}).results.toString().split(",");
+
+for (var i=0; i<allDaysAndReps.length; i+=2) {
+  day = allDaysAndReps[i].substring(allDaysAndReps[i].lastIndexOf("-")+1).replace(/^0/,"");
+  $('span.dijitCalendarDateLabel').each( function() {
+    if (allDaysAndReps[i+1] && this.innerHTML == day) this.innerHTML += (" - " + allDaysAndReps[i+1] );
+//    this.onclick = function(evt){
+//      var el = evt.target ? evt.target : evt.targetElement;
+//      var newDiv = document.createElement("div");
+//      newDiv.style="position:fixed; left:" + evt.screenX + "px; top:" + evt.screenX + "px; height:100px; width:100px;";
+//      var elAction = document.createElement("select");
+//      elAction.appendChild(new Option("Switch date with teammate."));
+//      newDiv.appendChild(elAction);
+//      el.appendChild(newDiv);
+//    }
+  });
+}
+
+
+
       });
     });
   });
@@ -20,7 +39,7 @@
 
 <% if ! @current_user %>
   <select name="user" id="user_cal_select" style="float : right;">
-    <option name="default-none">&nbsp;</option>
+    <option name="default-none" checked>&nbsp;</option>
     <% @all_users.each do |usr| %><option name="<%= usr.email %>"><%= usr.email %></option><% end %>
   </select>
 <% end %>

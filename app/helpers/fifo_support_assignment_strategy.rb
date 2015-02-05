@@ -11,6 +11,7 @@ class FifoSupportAssignmentStrategy
   def self.add_support_hero_day(user, date=nil)
     hu = HeapedUser.new(user)
     date = @current_day if date.nil?
+    return if date.saturday? || date.sunday?
     @semaphore.synchronize do
       if @support_heap.include?(hu)
         hu.number_days_assigned += 1
@@ -36,7 +37,8 @@ class FifoSupportAssignmentStrategy
   def self.generate_support_days_until(end_date)
     return if end_date < @current_day # before the dawn of time, all was nil
     start = @current_day
-    start.step(end_date,1) do
+    start.step(end_date,1) do |dt|
+      return if dt.saturday? || dt.sunday?
       add_support_hero_day(@support_heap[0])
     end
     ApplicationHelper.sort_for_heap @support_heap
