@@ -1,3 +1,8 @@
+THIS IS NOT IN A WORKING STATE AND WILL NOT BE UPDATED
+======================================================
+
+I am only keeping this here in case I want to reuse some code later on.
+
 Employee Schedule Manager
 =========================
 
